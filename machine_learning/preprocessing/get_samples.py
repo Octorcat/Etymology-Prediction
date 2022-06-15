@@ -16,9 +16,10 @@ try:
     from typing import Literal
 except ImportError:
     from typing_extensions import Literal
-
 ETYMOLOGY = Literal["Latin", "Proto-Germanic", "unknown"]
 Words = List[str]
+
+CMU_SRC_DICT_PATH = f"{os.getcwd()}/machine_learning/preprocessing/CMU_source_dict.json"
 
 
 def group_words_by_etymology() -> Dict[ETYMOLOGY, Words]:
@@ -27,7 +28,7 @@ def group_words_by_etymology() -> Dict[ETYMOLOGY, Words]:
 
     :return: etymological_groups
     """
-    with open(f"{os.getcwd()}/preprocessing/CMU_source_dict.json") as file:
+    with open(CMU_SRC_DICT_PATH) as file:
         etymology_dict = json.load(file)
         etymological_groups = {"Latin": [], "Proto-Germanic": [], "unknown": []}
         for word, etymology in etymology_dict.items():
@@ -42,7 +43,7 @@ def group_words_by_etymology() -> Dict[ETYMOLOGY, Words]:
 
 def balance_lists(list_a: Words, list_b: Words) -> Tuple[Words, Words]:
     """
-    Balance list_a and list_b to have the same length. 
+    Balance list_a and list_b to have the same length.
     Sample the longer list randomly to match the shorter one's length.
 
     :return: list_a, list_b where len(list_a) == len(list_b)
@@ -62,9 +63,9 @@ def balance_lists(list_a: Words, list_b: Words) -> Tuple[Words, Words]:
 
 def balance_samples_for_training(groups: Dict[ETYMOLOGY, Words]) -> Tuple[Words, Words]:
     """
-    Filter out 'unknown's (by not selecting them) and 
-    balance samples for etymology classification training. 
-    
+    Filter out 'unknown's (by not selecting them) and
+    balance samples for etymology classification training.
+
     :return: latin_list, germanic_list where len(latin_list) == len(germanic_list)
     """
     latin_list = groups["Latin"]

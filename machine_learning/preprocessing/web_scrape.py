@@ -16,10 +16,14 @@ try:
     from typing import Literal
 except ImportError:
     from typing_extensions import Literal
-
 ETYMOLOGY = Literal["Latin", "Germanic borrowing of Latin", "Proto-Germanic", "unknown"]
 
+
+CWD = os.getcwd()
+DATA_FILE_DIR = f"{CWD}/machine_learning/data/CMU_dict.txt"
+CMU_SRC_DICT_PATH = f"{CWD}/machine_learning/preprocessing/CMU_source_dict.json"
 ETYMOLOGY_REGEX = r"""Proto-Germanic|Germanic borrowing of Latin|Latin"""
+
 Lemmatizer = WordNetLemmatizer()
 Parser = WiktionaryParser()
 Parser.set_default_language("english")
@@ -51,7 +55,6 @@ def write_word_source_dict() -> None:
     Fetch source etymology of each of its words.
     Write the results to CMU_source_dict.
     """
-    DATA_FILE_DIR = f"{os.getcwd()}/data/CMU_dict.txt"
     word_source_dict = {}
     with open(DATA_FILE_DIR) as input_file:
         for line in input_file:
@@ -70,7 +73,7 @@ def write_word_source_dict() -> None:
                 word_source_dict[word] = source
             except:
                 continue
-    with open(f"{os.getcwd()}/preprocessing/CMU_source_dict.json", "w") as output_file:
+    with open(CMU_SRC_DICT_PATH, "w") as output_file:
         json.dump(word_source_dict, output_file)
 
 
