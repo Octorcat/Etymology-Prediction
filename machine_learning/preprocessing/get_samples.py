@@ -19,7 +19,7 @@ except ImportError:
 ETYMOLOGY = Literal["Latin", "Proto-Germanic", "unknown"]
 Words = List[str]
 
-CMU_SRC_DICT_PATH = f"{os.getcwd()}/machine_learning/preprocessing/CMU_source_dict.json"
+CMU_SRC_DICT_PATH = f"{os.getcwd()}/preprocessing/CMU_source_dict.json"
 
 
 def group_words_by_etymology() -> Dict[ETYMOLOGY, Words]:
