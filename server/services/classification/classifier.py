@@ -26,7 +26,7 @@ def tensor_to_etymology(out_tensor):
         category = ["Latin", "Germanic"][topi[0][i].item()]
         probability = math.exp(topv[0][i].item())
         etymology_pred_probs.append({category: probability})
-    return etymology_pred_probs
+    return {k: v for d in etymology_pred_probs for k, v in d.items()}
 
 
 def predict(word):
