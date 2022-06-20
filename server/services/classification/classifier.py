@@ -1,4 +1,3 @@
-from flask import Flask
 import torch
 import math
 
@@ -28,9 +27,10 @@ def tensor_to_etymology(out_tensor: torch.Tensor) -> dict:
         etymology_pred_probs.append({category: probability})
     return {k: v for d in etymology_pred_probs for k, v in d.items()}
 
-
-def predict(word: str) -> dict:
-    in_tensor = word_to_tensor(word)
-    out_tensor = run_rnn_model_prediction(in_tensor)
-    word_etymology_pred_probs = tensor_to_etymology(out_tensor)
-    return word_etymology_pred_probs
+class EtymologyPrediction:
+    @staticmethod
+    def predict(word: str) -> dict:
+        in_tensor = word_to_tensor(word)
+        out_tensor = run_rnn_model_prediction(in_tensor)
+        word_etymology_pred_probs = tensor_to_etymology(out_tensor)
+        return word_etymology_pred_probs

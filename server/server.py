@@ -1,7 +1,7 @@
 from flask import Flask, Response, send_from_directory
 
 from flask_cors import CORS
-from services.classification.classifier import predict
+from services.classification.classifier import EtymologyPrediction
 
 app = Flask(__name__)
 CORS(app)
@@ -19,5 +19,5 @@ def serve_static_files(path: str) -> Response:
 
 @app.route("/etymology/<word>", methods=["GET"])
 def predict_etymology_of(word: str) -> dict:
-    word_etymology_pred_probs = predict(word)
+    word_etymology_pred_probs = EtymologyPrediction.predict(word)
     return {"etymology": word_etymology_pred_probs}
