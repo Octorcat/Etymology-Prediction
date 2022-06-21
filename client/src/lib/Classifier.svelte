@@ -18,10 +18,14 @@
 
   async function getEtymology(word: string): Promise<Etymology> {
     if (!word) return DEFAULT_ETYMOLOGY;
+
     const res = await fetch(`${API_SERVER_URL}${word}`);
     const json = await res.json();
+    
     if (res.ok) {
       return json.etymology;
+    }else if (res.status == 400){
+      throw new Error(json.message);
     } else {
       throw new Error(json);
     }
