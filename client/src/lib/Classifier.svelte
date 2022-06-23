@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { Spring, spring } from "svelte/motion";
+  import { spring } from "svelte/motion";
+  import axios from "axios";
   import PieChart from "./output/PieChart.svelte";
   import DataTable from "./output/DataTable.svelte";
-  import axios from "axios";
+  import type { Spring } from "svelte/motion";
 
   interface Etymology {
     Germanic: number;
@@ -60,22 +61,22 @@
   $: store.set(pieCutPercent);
 </script>
 
-<section id="classifier_section">
+<section id="classifier">
   <input
     bind:value={word}
     on:input={handleChange}
     placeholder="Enter word here"
-    id="word_input"
+    id="word"
   />
-  <section id="classification-results">
+  <section id="results">
     {#if loading}
-      <p id="await-msg">...waiting</p>
+      <p id="loading-message">...waiting</p>
     {:else if error}
-      <p style="color: red">{error}</p>
+      <p id="error-message">{error}</p>
     {:else}
-      <section id="classification-response">
+      <section id="response">
         <PieChart size={200} percent={$store} />
-        <div id="classification-percentage-probs">
+        <div id="percentage-probs">
           <span>{format(etymology.Germanic)} Germanic</span>
           <span>{format(etymology.Latin)} Latin</span>
         </div>
@@ -85,40 +86,45 @@
   </section>
 </section>
 
-<style>
-  #classifier_section {
+<style lang="scss">
+  @mixin flex-stack {
     display: flex;
     flex-direction: column;
     justify-self: center;
     align-items: center;
-    gap: 20px;
   }
 
-  #classification-response {
+  @mixin flex-center {
     display: flex;
-    flex-direction: column;
     justify-self: center;
     align-items: center;
+  }
+
+  section#classifier {
+    @include flex-stack;
     gap: 20px;
   }
 
-  #word_input {
+  input#word {
     font-size: x-large;
     width: min(80vw, 310px);
   }
 
-  #await-msg {
-    text-align: center;
-  }
-
-  #classification-results {
+  section#results {
     font-size: x-large;
     width: min(80vw, 310px);
-  }
-
-  #classification-percentage-probs {
-    display: flex;
-    justify-self: center;
-    align-items: center;
+    p#loading-message {
+      text-align: center;
+    }
+    p#error-message {
+      color: red;
+    }
+    section#response {
+      @include flex-stack;
+      gap: 20px;
+      div#percentage-probs {
+        @include flex-center;
+      }
+    }
   }
 </style>
