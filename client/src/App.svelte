@@ -3,7 +3,7 @@
 </script>
 
 <main>
-  <h1> Etymology Classifier</h1>
+  <h1 id="main_header">Etymology Classifier</h1>
   <Classifier />
 </main>
 
@@ -13,9 +13,17 @@
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
 
+  :global(body) {
+    background: #eee;
+  }
+
   main {
-    text-align: center;
     padding: 1em;
-    margin: 0 auto;
+    margin: 0;
+    width: 90vw;
+  }
+
+  #main_header {
+    text-align: center;
   }
 </style>
