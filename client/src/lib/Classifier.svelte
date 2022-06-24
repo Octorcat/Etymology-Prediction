@@ -21,7 +21,10 @@
     Latin: 0.5,
   });
   const API_SERVER_URL: string = "http://localhost:5000/etymology";
-  const store: Spring<number> = spring(0, { stiffness: 0.3, damping: 0.3 });
+  const pieCutstore: Spring<number> = spring(0, {
+    stiffness: 0.3,
+    damping: 0.3,
+  });
 
   let loading: boolean = false;
   let error: string = "";
@@ -67,6 +70,10 @@
   const debouncedHandleChange = (evt: Event): void =>
     debounce(() => handleChange(evt), 600);
 
+  const handleClick = (): void => {
+    word = DEFAULT_WORD;
+  };
+
   const format = (probability: number): string =>
     probability < 0.1
       ? "<0%"
@@ -74,17 +81,35 @@
       ? ">99%"
       : `~${Math.round(100 * probability)}%`;
 
-  $: pieCutPercent = 100 * (word ? etymology.Latin : DEFAULT_ETYMOLOGY.Latin);
-  $: store.set(pieCutPercent);
+  $: pieCutPercent = 100 * etymology.Latin;
+  $: pieCutstore.set(pieCutPercent);
 </script>
 
 <section id="classifier">
-  <input
-    bind:value={word}
-    on:input={debouncedHandleChange}
-    placeholder="Enter word here"
-    id="word"
-  />
+  <section id="input">
+    <input
+      bind:value={word}
+      on:input={debouncedHandleChange}
+      placeholder="Enter word here"
+      id="word"
+    />
+    <svg
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      stroke="currentColor"
+      stroke-width="3"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      transform="rotate(45)"
+      id="delete-word-btn"
+      on:click={handleClick}
+    >
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </svg>
+  </section>
   <section id="results">
     {#if loading}
       <p id="loading-message">...waiting</p>
@@ -92,12 +117,21 @@
       <p id="error-message">{error}</p>
     {:else}
       <section id="response">
-        <PieChart size={200} percent={$store} />
-        <div id="percentage-probs">
-          <span>{format(etymology.Germanic)} Germanic</span>
-          <span>{format(etymology.Latin)} Latin</span>
-        </div>
-        <DataTable {...etymology} />
+        {#if word}
+          <PieChart size={200} percent={$pieCutstore} />
+          <div id="percentage-probs">
+            <span>{format(etymology.Germanic)} Germanic</span>
+            <span>{format(etymology.Latin)} Latin</span>
+          </div>
+          <DataTable {...etymology} />
+        {:else}
+          <PieChart size={200} percent={100 * DEFAULT_ETYMOLOGY.Latin} />
+          <div id="percentage-probs">
+            <span>{format(DEFAULT_ETYMOLOGY.Germanic)} Germanic</span>
+            <span>{format(DEFAULT_ETYMOLOGY.Latin)} Latin</span>
+          </div>
+          <DataTable {...DEFAULT_ETYMOLOGY} />
+        {/if}
       </section>
     {/if}
   </section>
@@ -122,9 +156,15 @@
     gap: 20px;
   }
 
-  input#word {
-    font-size: x-large;
-    width: min(80vw, 310px);
+  section#input {
+    @include flex-center;
+    input#word {
+      font-size: x-large;
+      width: min(80vw, 310px);
+    }
+    svg#delete-word-btn {
+      margin: 5px;
+    }
   }
 
   section#results {
