@@ -58,6 +58,15 @@
     }
   };
 
+  let timeoutID: number = -1;
+  const debounce = (callback: (evt: Event) => void, time: number): void => {
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(callback, time);
+  };
+
+  const debouncedHandleChange = (evt: Event): void =>
+    debounce(() => handleChange(evt), 600);
+
   const format = (probability: number): string =>
     probability < 0.1
       ? "<0%"
@@ -72,7 +81,7 @@
 <section id="classifier">
   <input
     bind:value={word}
-    on:input={handleChange}
+    on:input={debouncedHandleChange}
     placeholder="Enter word here"
     id="word"
   />
