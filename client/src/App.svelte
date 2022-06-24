@@ -7,23 +7,24 @@
   <Classifier />
 </main>
 
-<style>
+<style lang="scss">
+  :global {
+    body {
+      background: #eee;
+    }
+  }
+
   :root {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  }
-
-  :global(body) {
-    background: #eee;
   }
 
   main {
     padding: 1em;
     margin: 0;
     width: 90vw;
-  }
-
-  #main_header {
-    text-align: center;
+    #main_header {
+      text-align: center;
+    }
   }
 </style>
