@@ -31,6 +31,11 @@
   let word: string = DEFAULT_WORD;
   let etymology: Etymology = DEFAULT_ETYMOLOGY;
 
+  /**
+   * Fetch the word's etymoloy from API
+   * @param word - English word
+   * @return words's etymolgy promise
+   */
   const getEtymology = async (word: string): Promise<Etymology> => {
     try {
       (loading = true), (error = "");
@@ -49,9 +54,13 @@
     }
   };
 
-  const memoGetEtymology: (word: string) => Promise<Etymology> =
-    memoize(getEtymology);
+  /** Memoized version of getEtymology */
+  const memoGetEtymology: typeof getEtymology = memoize(getEtymology);
 
+  /**
+   * Update etymology on input change
+   * @param evt - input chnage event
+   */
   const handleChange = async (evt: Event): Promise<void> => {
     try {
       const word = (evt.target as HTMLInputElement).value;
@@ -62,18 +71,30 @@
   };
 
   let timeoutID: number = -1;
+  /**
+   * Debounce event callback
+   * @param callback - Event callback function to debounce
+   * @param time - wait until time has passed since last event
+   */
   const debounce = (callback: (evt: Event) => void, time: number): void => {
     clearTimeout(timeoutID);
     timeoutID = setTimeout(callback, time);
   };
 
+  /** Debounced handle input change */
   const debouncedHandleChange = (evt: Event): void =>
     debounce(() => handleChange(evt), 600);
 
+  /** Delete word on click */
   const handleClick = (): void => {
     word = DEFAULT_WORD;
   };
 
+  /**
+   * Format probability to rounded percentage message 
+   * @param probability - probability on interval [0, 1]
+   * @return percentage message
+   */
   const format = (probability: number): string =>
     probability < 0.1
       ? "<0%"
