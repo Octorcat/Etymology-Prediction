@@ -1,6 +1,7 @@
 <script lang="ts">
   import { spring } from "svelte/motion";
   import axios from "axios";
+  import memoize from "memoizee";
   import PieChart from "./output/PieChart.svelte";
   import DataTable from "./output/DataTable.svelte";
   import type { Spring } from "svelte/motion";
@@ -27,27 +28,34 @@
   let word: string = DEFAULT_WORD;
   let etymology: Etymology = DEFAULT_ETYMOLOGY;
 
-  const getEtymology = async (word: string): Promise<void> => {
+  const getEtymology = async (word: string): Promise<Etymology> => {
     try {
       (loading = true), (error = "");
       if (word) {
         const res = await axios.get<ApiResponse>(`${API_SERVER_URL}/${word}`);
-        etymology = { ...res.data.etymology };
+        return { ...res.data.etymology };
       } else {
-        etymology = DEFAULT_ETYMOLOGY;
+        return DEFAULT_ETYMOLOGY;
       }
     } catch (err) {
       error =
         err.code == "ERR_BAD_REQUEST" ? err.response.data.message : err.message;
-      etymology = DEFAULT_ETYMOLOGY;
+      return DEFAULT_ETYMOLOGY;
     } finally {
       loading = false;
     }
   };
 
+  const memoGetEtymology: (word: string) => Promise<Etymology> =
+    memoize(getEtymology);
+
   const handleChange = async (evt: Event): Promise<void> => {
-    const word = (evt.target as HTMLInputElement).value;
-    await getEtymology(word).catch(console.error);
+    try {
+      const word = (evt.target as HTMLInputElement).value;
+      etymology = await memoGetEtymology(word);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const format = (probability: number): string =>
