@@ -10,7 +10,7 @@
 <style lang="scss">
   :global {
     body {
-      background: #eee;
+      background: #fefefe;
     }
   }
 
