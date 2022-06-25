@@ -41,6 +41,7 @@
       (loading = true), (error = "");
       if (word) {
         const res = await axios.get<ApiResponse>(`${API_SERVER_URL}/${word}`);
+        console.log(res);
         return { ...res.data.etymology };
       } else {
         return DEFAULT_ETYMOLOGY;
@@ -64,6 +65,7 @@
   const handleChange = async (evt: Event): Promise<void> => {
     try {
       const word = (evt.target as HTMLInputElement).value;
+      console.log(word);
       etymology = await memoGetEtymology(word);
     } catch (error) {
       console.error(error);
@@ -91,7 +93,7 @@
   };
 
   /**
-   * Format probability to rounded percentage message 
+   * Format probability to rounded percentage message
    * @param probability - probability on interval [0, 1]
    * @return percentage message
    */
