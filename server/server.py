@@ -1,8 +1,8 @@
 from flask import Flask, Response, send_from_directory
 from flask_restx import Resource, Api
 from flask_cors import CORS
-from services.classification.classifier import EtymologyPrediction
-from services.classification.model.load_model import ALL_CHARS as ALLOWED_CHARS
+from .services.classification.classifier import EtymologyPrediction
+from .services.classification.model.load_model import ALL_CHARS as ALLOWED_CHARS
 
 
 app = Flask(__name__)
