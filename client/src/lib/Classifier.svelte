@@ -83,7 +83,7 @@
 
   /** Debounced handle input change */
   const debouncedHandleChange = (evt: Event): void =>
-    debounce(() => handleChange(evt), 600);
+    debounce(() => handleChange(evt), 100);
 
   /** Delete word on click */
   const handleClick = (): void => {
