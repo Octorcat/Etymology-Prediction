@@ -56,7 +56,9 @@
   };
 
   /** Memoized version of getEtymology */
-  const memoGetEtymology: typeof getEtymology = memoize(getEtymology);
+  const memoGetEtymology: typeof getEtymology = memoize(getEtymology, {
+    promise: "done:finally",
+  });
 
   /**
    * Update etymology on input change
@@ -66,7 +68,7 @@
     try {
       const word = (evt.target as HTMLInputElement).value;
       console.log(word);
-      etymology = await getEtymology(word);
+      etymology = await memoGetEtymology(word);
     } catch (error) {
       console.error(error);
     }
