@@ -8,6 +8,10 @@ from services.classification.model.load_model import ALL_CHARS as ALLOWED_CHARS
 app = Flask(__name__)
 CORS(app)
 
+"""
+Client routes
+"""
+
 CLIENT_DIST_DIR = "../client/dist"
 
 
@@ -21,12 +25,17 @@ def serve_static_files(path: str) -> Response:
     return send_from_directory(CLIENT_DIST_DIR, path)
 
 
-api = Api(app, doc="/doc")
+"""
+Server routes
+"""
+
+api = Api(app, doc="/doc") # Api documentation route
 
 
 @api.route("/etymology/<string:word>")
 class EtymologyPredictionRouter(Resource):
     def get(self, word: str) -> dict:
+        """ get word's predictied etymology probabilities """
         MAX_WORD_LEN = 34
         word = word.strip().lower()
         if len(word) > MAX_WORD_LEN:
