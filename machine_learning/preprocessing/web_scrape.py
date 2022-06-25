@@ -21,7 +21,7 @@ ETYMOLOGY = Literal["Latin", "Germanic borrowing of Latin", "Proto-Germanic", "u
 
 CWD = os.getcwd()
 DATA_FILE_DIR = f"{CWD}/machine_learning/data/CMU_dict.txt"
-CMU_SRC_DICT_PATH = f"{CWD}/machine_learning/preprocessing/collected_etymology_dict.json"
+COLLECTED_DICT_PATH = f"{CWD}/machine_learning/preprocessing/collected_etymology_dict.json"
 ETYMOLOGY_REGEX = r"""Proto-Germanic|Germanic borrowing of Latin|Latin"""
 
 Lemmatizer = WordNetLemmatizer()
@@ -73,7 +73,7 @@ def write_word_source_dict() -> None:
                 word_source_dict[word] = source
             except:
                 continue
-    with open(CMU_SRC_DICT_PATH, "w") as output_file:
+    with open(COLLECTED_DICT_PATH, "w") as output_file:
         json.dump(word_source_dict, output_file)
 
 
