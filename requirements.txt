@@ -4,7 +4,7 @@ flask-restx==0.5.1
 gunicorn==20.1.0
 matplotlib==3.4.3
 nltk==3.7
-torch==1.9.1
+# torch==1.9.1 # used during training
 typing-extensions==3.10.0.2
 wiktionaryparser==0.0.97
 # For Linux pytorch 1.5.1 (Deployment):
