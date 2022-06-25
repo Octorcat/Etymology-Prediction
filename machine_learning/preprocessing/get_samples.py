@@ -19,8 +19,6 @@ except ImportError:
 ETYMOLOGY = Literal["Latin", "Proto-Germanic", "unknown"]
 Words = List[str]
 
-CMU_SRC_DICT_PATH = f"{os.getcwd()}/preprocessing/collected_etymology_dict.json"
-
 
 def group_words_by_etymology() -> Dict[ETYMOLOGY, Words]:
     """
@@ -28,7 +26,7 @@ def group_words_by_etymology() -> Dict[ETYMOLOGY, Words]:
 
     :return: etymological_groups
     """
-    with open(CMU_SRC_DICT_PATH) as file:
+    with open(f"{os.getcwd()}/preprocessing/collected_etymology_dict.json") as file:
         etymology_dict = json.load(file)
         etymological_groups = {"Latin": [], "Proto-Germanic": [], "unknown": []}
         for word, etymology in etymology_dict.items():
