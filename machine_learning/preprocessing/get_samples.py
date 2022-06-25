@@ -3,7 +3,7 @@
 # License : MIT
 # ---------------------------------------------------------------------------
 """ 
-Run 'python preprocessing/get_samples.py' to read CMU_source_dict.json,
+Run 'python preprocessing/get_samples.py' to read collected_etymology_dict.json,
 group the sample words by etymology, and 
 balance the lists of latin and germanic ones for training.
 """
@@ -19,7 +19,7 @@ except ImportError:
 ETYMOLOGY = Literal["Latin", "Proto-Germanic", "unknown"]
 Words = List[str]
 
-CMU_SRC_DICT_PATH = f"{os.getcwd()}/preprocessing/CMU_source_dict.json"
+CMU_SRC_DICT_PATH = f"{os.getcwd()}/preprocessing/collected_etymology_dict.json"
 
 
 def group_words_by_etymology() -> Dict[ETYMOLOGY, Words]:

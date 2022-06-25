@@ -4,7 +4,7 @@
 # ---------------------------------------------------------------------------
 """ 
 Run 'python preprocessing/web_scrape.py' to scrape Wiktionary 
-for etymologies and store the results to CMU_source_dict.json
+for etymologies and store the results to collected_etymology_dict.json
 """
 from nltk.stem import WordNetLemmatizer
 from wiktionaryparser import WiktionaryParser
@@ -21,7 +21,7 @@ ETYMOLOGY = Literal["Latin", "Germanic borrowing of Latin", "Proto-Germanic", "u
 
 CWD = os.getcwd()
 DATA_FILE_DIR = f"{CWD}/machine_learning/data/CMU_dict.txt"
-CMU_SRC_DICT_PATH = f"{CWD}/machine_learning/preprocessing/CMU_source_dict.json"
+CMU_SRC_DICT_PATH = f"{CWD}/machine_learning/preprocessing/collected_etymology_dict.json"
 ETYMOLOGY_REGEX = r"""Proto-Germanic|Germanic borrowing of Latin|Latin"""
 
 Lemmatizer = WordNetLemmatizer()
@@ -53,7 +53,7 @@ def write_word_source_dict() -> None:
     """
     Read CMU_dict of English words.
     Fetch source etymology of each of its words.
-    Write the results to CMU_source_dict.
+    Write the results to collected_etymology_dict.
     """
     word_source_dict = {}
     with open(DATA_FILE_DIR) as input_file:
