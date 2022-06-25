@@ -1,0 +1,8 @@
+{
+    "cacheDirectories": [
+        "client/node_modules"
+    ],
+    "scripts": {
+        "heroku-postbuild": "cd client && npm install && npm run build"
+    }
+}
