@@ -1,9 +1,14 @@
 Flask==2.1.2
 Flask-Cors==3.0.10
 flask-restx==0.5.1
+gunicorn==20.1.0
 matplotlib==3.4.3
 nltk==3.7
 torch==1.9.1
 typing-extensions==3.10.0.2
 wiktionaryparser==0.0.97
+# For Linux pytorch 1.5.1 (Deployment):
+https://download.pytorch.org/whl/cpu/torch-1.5.1%2Bcpu-cp37-cp37m-linux_x86_64.whl
+# For Windows pytorch 1.5.1:
+#https://download.pytorch.org/whl/cpu/torch-1.5.1%2Bcpu-cp37-cp37m-win_amd64.whl
 
