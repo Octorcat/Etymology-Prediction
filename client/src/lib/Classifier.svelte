@@ -20,7 +20,7 @@
     Germanic: 0.5,
     Latin: 0.5,
   });
-  const API_SERVER_URL: string = "http://localhost:5000/etymology";
+  const API_SERVER_URL: string = "/etymology";
   const pieCutstore: Spring<number> = spring(0, {
     stiffness: 0.3,
     damping: 0.3,
