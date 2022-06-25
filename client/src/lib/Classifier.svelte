@@ -57,7 +57,7 @@
 
   /** Memoized version of getEtymology */
   const memoGetEtymology: typeof getEtymology = memoize(getEtymology, {
-    promise: "done:finally",
+    promise: "then",
   });
 
   /**
