@@ -1,0 +1,5 @@
+# documentation
+/docs
+# training of the machine learning model 
+# (only inference thereof is needed for deployment)
+/machine_learning
