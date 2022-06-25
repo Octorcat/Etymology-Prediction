@@ -36,7 +36,7 @@
    * @param word - English word
    * @return words's etymolgy promise
    */
-  async function getEtymology(word: string): Promise<Etymology> {
+  const getEtymology = async (word: string): Promise<Etymology> => {
     try {
       (loading = true), (error = "");
       if (word) {
@@ -53,7 +53,7 @@
     } finally {
       loading = false;
     }
-  }
+  };
 
   /** Memoized version of getEtymology */
   const memoGetEtymology: typeof getEtymology = memoize(getEtymology);
@@ -66,7 +66,7 @@
     try {
       const word = (evt.target as HTMLInputElement).value;
       console.log(word);
-      etymology = await memoGetEtymology(word);
+      etymology = await getEtymology(word);
     } catch (error) {
       console.error(error);
     }
