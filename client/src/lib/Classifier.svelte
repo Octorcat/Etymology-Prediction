@@ -1,7 +1,7 @@
 <script lang="ts">
   import { spring } from "svelte/motion";
   import axios from "axios";
-  import memoize from "memoizee";
+  // import memoize from "memoizee";
   import PieChart from "./output/PieChart.svelte";
   import DataTable from "./output/DataTable.svelte";
   import type { Spring } from "svelte/motion";
@@ -56,9 +56,9 @@
   };
 
   /** Memoized version of getEtymology */
-  const memoGetEtymology: typeof getEtymology = memoize(getEtymology, {
-    promise: true
-  });
+  // const memoGetEtymology: typeof getEtymology = memoize(getEtymology, {
+  //   promise: true
+  // });
 
   /**
    * Update etymology on input change
@@ -68,7 +68,7 @@
     try {
       const word = (evt.target as HTMLInputElement).value;
       console.log(word);
-      etymology = await memoGetEtymology(word);
+      etymology = await getEtymology(word);
     } catch (error) {
       console.error(error);
     }
