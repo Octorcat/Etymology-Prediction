@@ -62,7 +62,7 @@ ALL_CHARS: List[str] = [
 NB_CHARS: int = len(ALL_CHARS)
 NB_HIDDEN: int = 34 * 2
 NB_CATEGORIES: int = 2
-MODEL_PTH_PATH: str = f"{os.getcwd()}{'/server' if os.environ.get('ENV') == 'production' else ''}/services/classification/model/model.pth"
+MODEL_PTH_PATH: str = f"{os.getcwd()}/server/services/classification/model/model.pth"
 model: RNN = RNN(NB_CHARS, NB_HIDDEN, NB_CATEGORIES)
 model.load_state_dict(torch.load(MODEL_PTH_PATH))
 model.eval()
