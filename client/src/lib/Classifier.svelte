@@ -1,7 +1,7 @@
 <script lang="ts">
   import { spring } from "svelte/motion";
   import axios from "axios";
-  import memoize from "memoizee";
+  // import memoize from "memoizee";
   import PieChart from "./output/PieChart.svelte";
   import DataTable from "./output/DataTable.svelte";
   import type { Spring } from "svelte/motion";
@@ -20,7 +20,10 @@
     Germanic: 0.5,
     Latin: 0.5,
   });
-  const API_SERVER_URL: string = "http://localhost:5000/etymology";
+  const API_SERVER_URL: string =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000/etymology"
+      : "/etymology";
   const pieCutstore: Spring<number> = spring(0, {
     stiffness: 0.3,
     damping: 0.3,
@@ -41,6 +44,7 @@
       (loading = true), (error = "");
       if (word) {
         const res = await axios.get<ApiResponse>(`${API_SERVER_URL}/${word}`);
+        console.log(res);
         return { ...res.data.etymology };
       } else {
         return DEFAULT_ETYMOLOGY;
@@ -55,7 +59,9 @@
   };
 
   /** Memoized version of getEtymology */
-  const memoGetEtymology: typeof getEtymology = memoize(getEtymology);
+  // const memoGetEtymology: typeof getEtymology = memoize(getEtymology, {
+  //   promise: true
+  // });
 
   /**
    * Update etymology on input change
@@ -64,7 +70,8 @@
   const handleChange = async (evt: Event): Promise<void> => {
     try {
       const word = (evt.target as HTMLInputElement).value;
-      etymology = await memoGetEtymology(word);
+      console.log(word);
+      etymology = await getEtymology(word);
     } catch (error) {
       console.error(error);
     }
@@ -91,7 +98,7 @@
   };
 
   /**
-   * Format probability to rounded percentage message 
+   * Format probability to rounded percentage message
    * @param probability - probability on interval [0, 1]
    * @return percentage message
    */
