@@ -1,10 +1,12 @@
 <script lang="ts">
   import Classifier from "./lib/Classifier.svelte";
+  import MainFooter from "./lib/footer/MainFooter.svelte";
 </script>
 
 <main>
   <h1 id="main_header">Etymology Classifier</h1>
   <Classifier />
+  <MainFooter />
 </main>
 
 <style lang="scss">
