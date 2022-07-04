@@ -1,7 +1,6 @@
 <script lang="ts">
   import { spring } from "svelte/motion";
   import axios from "axios";
-  // import memoize from "memoizee";
   import PieChart from "./output/PieChart.svelte";
   import DataTable from "./output/DataTable.svelte";
   import type { Spring } from "svelte/motion";
@@ -57,11 +56,6 @@
       loading = false;
     }
   };
-
-  /** Memoized version of getEtymology */
-  // const memoGetEtymology: typeof getEtymology = memoize(getEtymology, {
-  //   promise: true
-  // });
 
   /**
    * Update etymology on input change
