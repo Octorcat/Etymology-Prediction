@@ -10,7 +10,6 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-    "@types/memoizee": "^0.4.8",
     "sass": "^1.53.0",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.7",
@@ -21,7 +20,6 @@
     "@tsconfig/svelte": "^2.0.1",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
     "axios": "^0.27.2",
-    "memoizee": "^0.4.15",
     "svelte-preprocess": "^4.9.8",
     "vite": "^2.9.9"
   }
